@@ -1,6 +1,7 @@
 import { homePath, ticketsPath } from "@/paths";
 import { LucideKanban } from "lucide-react";
 import Link from "next/link";
+import { ThemeSwitcher } from "./theme/theme-switcher";
 import { buttonVariants } from "./ui/button";
 
 const Header = () => {
@@ -13,7 +14,7 @@ const Header = () => {
           "
     >
       <ul className="flex justify-between">
-        <li>
+        <li className="flex items-center gap-x-2">
           <Link
             href={homePath()}
             className={buttonVariants({ variant: "ghost" })}
@@ -22,7 +23,8 @@ const Header = () => {
             <h1 className="text-lg font-semibold ml-2">TicketBounty</h1>
           </Link>
         </li>
-        <li>
+        <li className="flex items-center gap-x-2">
+          <ThemeSwitcher />
           <Link
             href={ticketsPath()}
             className={buttonVariants({ variant: "default" })}
