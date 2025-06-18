@@ -1,13 +1,14 @@
 "use client";
 
 import { FieldError } from "@/components/form/field-error";
+import { Form } from "@/components/form/form";
 import { SubmitButton } from "@/components/form/submit-button";
 import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { Ticket } from "@prisma/client";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { upsertTicket } from "../actions/upsert-ticket";
 
 type TicketUpsertFormProps = {
@@ -21,7 +22,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
   );
 
   return (
-    <form action={action} className="flex flex-col gap-y-2">
+    <Form action={action} actionState={actionState}>
       <Label htmlFor="title">Title</Label>
       <Input
         type="text"
@@ -44,8 +45,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
       <FieldError actionState={actionState} name="content" />
 
       <SubmitButton label={ticket ? "Update" : "Create"} />
-      {actionState.message}
-    </form>
+    </Form>
   );
 };
 
