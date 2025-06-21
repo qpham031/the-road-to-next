@@ -1,8 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ticketEditPath, ticketPath } from "@/paths";
+import { currencyFromCent } from "@/utils/currency";
 import type { Ticket } from "@prisma/client";
 import clsx from "clsx";
 import {
@@ -48,7 +55,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     <div
       className={clsx("w-full flex gap-x-1", {
         "max-w-xl": isDetail,
-        "max-w-md": !isDetail,
+        "max-w-lg": !isDetail,
       })}
     >
       <Card className="w-full gap-4">
@@ -67,6 +74,12 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
             {ticket.content}
           </span>
         </CardContent>
+        <CardFooter className="flex justify-between">
+          <p className="text-sm text-muted-foreground">{ticket.deadline}</p>
+          <p className="text-sm text-muted-foreground">
+            {currencyFromCent(ticket.bounty)}
+          </p>
+        </CardFooter>
       </Card>
       <div className="flex flex-col gap-y-1">
         {isDetail ? (

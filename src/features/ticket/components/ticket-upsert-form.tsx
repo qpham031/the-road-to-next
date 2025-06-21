@@ -7,6 +7,7 @@ import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { fromCent } from "@/utils/currency";
 import type { Ticket } from "@prisma/client";
 import { useActionState, useEffect } from "react";
 import { upsertTicket } from "../actions/upsert-ticket";
@@ -43,6 +44,36 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
         }
       />
       <FieldError actionState={actionState} name="content" />
+
+      <div className="flex gap-2">
+        <div className="flex-1 flex gap-2 flex-col">
+          <Label htmlFor="deadline">Deadline</Label>
+          <Input
+            type="date"
+            id="deadline"
+            name="deadline"
+            defaultValue={
+              (actionState.payload?.get("deadline") as string) ??
+              ticket?.deadline
+            }
+          />
+          <FieldError actionState={actionState} name="deadline" />
+        </div>
+        <div className="flex-1 flex gap-2 flex-col">
+          <Label>Bounty ($)</Label>
+          <Input
+            type="number"
+            id="bounty"
+            name="bounty"
+            step="0.01"
+            defaultValue={
+              (actionState.payload?.get("bounty") as string) ??
+              (ticket?.bounty ? fromCent(ticket.bounty) : "")
+            }
+          />
+          <FieldError actionState={actionState} name="bounty" />
+        </div>
+      </div>
 
       <SubmitButton label={ticket ? "Update" : "Create"} />
     </Form>
