@@ -1,5 +1,13 @@
 "use client";
 
+import type { Ticket } from "@prisma/client";
+import clsx from "clsx";
+import {
+  LucidePencil,
+  LucideSquareArrowOutUpRight,
+  LucideTrash,
+} from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,14 +18,6 @@ import {
 } from "@/components/ui/card";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { currencyFromCent } from "@/utils/currency";
-import type { Ticket } from "@prisma/client";
-import clsx from "clsx";
-import {
-  LucidePencil,
-  LucideSquareArrowOutUpRight,
-  LucideTrash,
-} from "lucide-react";
-import Link from "next/link";
 import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
 
@@ -53,16 +53,16 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
 
   return (
     <div
-      className={clsx("w-full flex gap-x-1", {
+      className={clsx("flex w-full gap-x-1", {
         "max-w-xl": isDetail,
         "max-w-lg": !isDetail,
       })}
     >
       <Card className="w-full gap-4">
         <CardHeader>
-          <CardTitle className="flex gap-x-2 items-center">
+          <CardTitle className="flex items-center gap-x-2">
             {TICKET_ICONS[ticket.status]}
-            <h3 className="text-2xl truncate">{ticket.title}</h3>
+            <h3 className="truncate text-2xl">{ticket.title}</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -75,8 +75,8 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
           </span>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <p className="text-sm text-muted-foreground">{ticket.deadline}</p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">{ticket.deadline}</p>
+          <p className="text-muted-foreground text-sm">
             {currencyFromCent(ticket.bounty)}
           </p>
         </CardFooter>
